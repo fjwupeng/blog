@@ -8,7 +8,7 @@
 - 两篇开站文章是根据讨论起草的文案，请在面向公众发布前核对。
 - 照片来自你在原对话中提供的本人照片。
 - 公开联系方式尚未提供；联系页会如实说明，未设置虚假的提交表单。
-- 当前正式网站为 https://wupeng-36t.pages.dev ，源码仓库为 `fjwupeng/blog`。Cloudflare Pages 项目名称为 `wupeng`，已连接本仓库并完成首次部署，提交到 `main` 后自动构建并发布。Vercel 部署 https://wupeng.vercel.app 保留，也连接同一仓库。
+- 当前正式网站为 https://fjwupeng.pages.dev ，源码仓库为 `fjwupeng/blog`。Cloudflare Pages 项目名称为 `fjwupeng`，已连接本仓库，提交到 `main` 后自动构建并发布。Vercel 部署 https://wupeng.vercel.app 保留，也连接同一仓库。
 - 原 Sites 链接为私有预览，不随 GitHub 更新。
 
 ## 新增文章

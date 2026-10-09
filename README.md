@@ -8,7 +8,7 @@ Cloudflare Pages 已连接本仓库并完成首次部署，配置说明见 [CLOU
 
 源码仓库：[fjwupeng/blog](https://github.com/fjwupeng/blog)。文章位于 `src/data/post/`，图片位于 `public/images/`。
 
-网站：[wupeng-36t.pages.dev](https://wupeng-36t.pages.dev)。Cloudflare Pages 项目名称为 `wupeng`，提交到 `main` 会自动构建并发布。平台实际分配的网址包含后缀 `-36t`。
+网站：[fjwupeng.pages.dev](https://fjwupeng.pages.dev)。Cloudflare Pages 项目名称为 `fjwupeng`，提交到 `main` 会自动构建并发布。
 
 提交到 `main` 后会运行构建检查，同时触发 Cloudflare Pages 自动发布。Vercel 的 [wupeng.vercel.app](https://wupeng.vercel.app) 保留为另一份部署，也连接同一仓库。原来的 Sites 预览链接由另一套流程维护，不随 GitHub 更新。
 

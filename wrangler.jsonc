@@ -2,7 +2,7 @@
 // Build command and build-time environment variables are set in the dashboard.
 // Docs: https://developers.cloudflare.com/pages/functions/wrangler-configuration/
 {
-  "name": "wupeng",
+  "name": "fjwupeng",
   "compatibility_date": "2026-09-01",
   "pages_build_output_dir": "./dist",
 }

@@ -2,7 +2,7 @@
 
 本站是 Astro 静态网站，可以连接同一份 GitHub 仓库自动发布，无需文章数据库或服务器适配器。
 
-当前已连接 `fjwupeng/blog`，项目名称为 `wupeng`，首次部署成功，实际网址为 https://wupeng-36t.pages.dev 。
+当前已连接 `fjwupeng/blog`，项目名称为 `fjwupeng`，实际网址为 https://fjwupeng.pages.dev 。
 
 ## 创建项目
 
@@ -10,7 +10,7 @@
 
 | 设置                        | 值                                                         |
 | --------------------------- | ---------------------------------------------------------- |
-| 项目名称                    | `wupeng`                                                   |
+| 项目名称                    | `fjwupeng`                                                 |
 | 生产分支                    | `main`                                                     |
 | 框架                        | Astro                                                      |
 | 构建命令                    | `npm run build`                                            |
@@ -29,7 +29,7 @@
 
 项目连接成功后，提交文章、图片或页面到 `main` 会触发构建与发布。先确认首次部署成功，再通过一次真实提交验证自动更新。
 
-平台分配的网址为 `wupeng-36t.pages.dev`，并非 `wupeng.pages.dev`。以后绑定自定义域名时，更新 `src/config.yaml` 中的 `site.site` 并重新构建。
+平台分配的网址为 `fjwupeng.pages.dev`。以后绑定自定义域名时，更新 `src/config.yaml` 中的 `site.site` 并重新构建。
 
 ## 国内访问
 
