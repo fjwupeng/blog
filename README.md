@@ -4,6 +4,8 @@
 
 内容维护与部署步骤见 [CONTENT-GUIDE.md](CONTENT-GUIDE.md)。
 
+Cloudflare Pages 的部署配置已准备，连接步骤见 [CLOUDFLARE-DEPLOYMENT.md](CLOUDFLARE-DEPLOYMENT.md)。Cloudflare 的实际上线状态以控制台为准。
+
 源码仓库：[fjwupeng/blog](https://github.com/fjwupeng/blog)。文章位于 `src/data/post/`，图片位于 `public/images/`。
 
 网站：[wupeng.vercel.app](https://wupeng.vercel.app)。Vercel 项目名称为 `wupeng`，已连接本仓库，提交到 `main` 会自动构建并发布。旧地址 `wupeng-personal.vercel.app` 自动跳转到新地址。
