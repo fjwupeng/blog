@@ -8,7 +8,8 @@
 - 两篇开站文章是根据讨论起草的文案，请在面向公众发布前核对。
 - 照片来自你在原对话中提供的本人照片。
 - 公开联系方式尚未提供；联系页会如实说明，未设置虚假的提交表单。
-- 原 Sites 链接为私有预览，外部搜索引擎不能抓取。网站源码使用 GitHub 仓库 `fjwupeng/blog`；自动发布需要托管平台完成一次仓库连接。
+- 正式网站为 https://wupeng-personal.vercel.app ，源码仓库为 `fjwupeng/blog`。Vercel 已连接本仓库，提交到 `main` 后自动构建并发布。
+- 原 Sites 链接为私有预览，不随 GitHub 更新。
 
 ## 新增文章
 
@@ -34,12 +35,14 @@ draft: true
 
 Node.js 版本遵循 `package.json`。首次安装运行 `npm ci`，预览运行 `npm run dev`，构建运行 `npm run build`。生成目录为 `dist`。
 
-## 接入 GitHub 自动更新
+## GitHub 自动更新
 
-1. 将本站源码放入你选定的 GitHub 仓库；保留 LICENSE.md，勿上传 node_modules、环境密钥和 `.sites-runtime`。
-2. 在选定的静态托管平台连接该仓库。构建命令使用 `npm run build`，输出目录使用 `dist`。
-3. 正式域名确定后，在托管平台设置 `SITE_URL` 环境变量（例如实际分配的网址或自己的域名）。它覆盖 `src/config.yaml` 中的 `site.site`；构建会同步更新规范链接、RSS、站点地图和 robots.txt。
-4. 后续提交文章即可触发托管平台重新构建。仅把代码推到 GitHub 本身不会自动更新当前 Sites 私有预览。
+1. 在本仓库新增或修改文章、配图、页面。
+2. 提交到 `main`，Vercel 自动执行 `npm ci` 和 `npm run build`，发布 `dist`。Node.js 使用 24。
+3. 在 Vercel 的 Deployments 中查看状态。成功后正式网址更新；失败时网站保留上一版。
+4. 绑定自定义域名后，修改 `src/config.yaml` 中的 `site.site`，或在 Vercel 设置 `SITE_URL` 环境变量；环境变量优先。构建会同步更新规范链接、RSS、站点地图和 robots.txt。
+
+文章文件可以直接通过 GitHub 网页的编辑功能维护。`draft: true` 会隐藏文章；准备发布时请设为 `draft: false`。仅修改本地文件还需要提交并推送。
 
 在 `.github/workflows/content-check.yml` 中已提供构建检查，可在 GitHub 提交及拉取请求时验证内容。
 
@@ -49,4 +52,4 @@ Node.js 版本遵循 `package.json`。首次安装运行 `npm ci`，预览运行
 
 ## 私有预览与正式上线
 
-私有预览用于核对版式和文案。正式上线还需要确定公开联系方式、GitHub 仓库、域名及托管平台，并确认文章与项目描述。搜索收录和 AI 引用没有保证。
+Vercel 网站已上线，后续可以绑定自定义域名并补充公开联系方式。文章和项目描述仍由本人审阅维护。搜索收录和 AI 引用没有保证。

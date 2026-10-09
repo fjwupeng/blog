@@ -6,11 +6,13 @@
 
 源码仓库：[fjwupeng/blog](https://github.com/fjwupeng/blog)。文章位于 `src/data/post/`，图片位于 `public/images/`。
 
-提交到 `main` 后会运行构建检查。连接托管平台后，同一提交可自动触发网站发布；仅推送源码不会更新原来的 Sites 预览链接。
+网站：[wupeng-personal.vercel.app](https://wupeng-personal.vercel.app)。Vercel 已连接本仓库，提交到 `main` 会自动构建并发布，首次部署已成功。
+
+提交到 `main` 后会运行构建检查，同时触发 Vercel 自动发布。原来的 Sites 预览链接由另一套流程维护，不随 GitHub 更新。
 
 Vercel 连接参数：导入 `fjwupeng/blog`，Framework Preset 选 `Astro`，生产分支 `main`，构建命令 `npm run build`，输出目录 `dist`，Node.js 24。仓库中的 `vercel.json` 已配置构建参数。
 
-设置环境变量 `SITE_URL` 为实际正式网址，使文章规范链接、RSS 和站点地图使用正确域名。首次连接需要在自己的 Vercel 账号中授权此仓库。之后每次提交到 `main` 会自动部署生产网站；其他分支用于预览。
+`src/config.yaml` 已配置当前正式网址，使文章规范链接、RSS 和站点地图使用正确域名。以后绑定自定义域名时，可以修改此配置或设置 Vercel 环境变量 `SITE_URL` 覆盖它。其他分支用于预览。
 
 可以先使用 Vercel 分配的网址，域名稍后再绑定。添加自定义域名时，以 Vercel 项目页面给出的 DNS 记录为准。
 

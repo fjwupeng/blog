@@ -1,6 +1,6 @@
 site:
   name: 吴鹏
-  site: 'https://wupeng-personal.modrenn.chatgpt.site'
+  site: 'https://wupeng-personal.vercel.app'
   base: '/'
   trailingSlash: false
 
@@ -62,4 +62,3 @@ analytics:
 
 ui:
   theme: 'light:only' # Values: "system" | "light" | "dark" | "light:only" | "dark:only"
-
