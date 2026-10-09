@@ -6,7 +6,7 @@
 
 源码仓库：[fjwupeng/blog](https://github.com/fjwupeng/blog)。文章位于 `src/data/post/`，图片位于 `public/images/`。
 
-网站：[wupeng-personal.vercel.app](https://wupeng-personal.vercel.app)。Vercel 已连接本仓库，提交到 `main` 会自动构建并发布，首次部署已成功。
+网站：[wupeng.vercel.app](https://wupeng.vercel.app)。Vercel 项目名称为 `wupeng`，已连接本仓库，提交到 `main` 会自动构建并发布。旧地址 `wupeng-personal.vercel.app` 自动跳转到新地址。
 
 提交到 `main` 后会运行构建检查，同时触发 Vercel 自动发布。原来的 Sites 预览链接由另一套流程维护，不随 GitHub 更新。
 

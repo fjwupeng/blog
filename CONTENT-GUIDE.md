@@ -8,7 +8,7 @@
 - 两篇开站文章是根据讨论起草的文案，请在面向公众发布前核对。
 - 照片来自你在原对话中提供的本人照片。
 - 公开联系方式尚未提供；联系页会如实说明，未设置虚假的提交表单。
-- 正式网站为 https://wupeng-personal.vercel.app ，源码仓库为 `fjwupeng/blog`。Vercel 已连接本仓库，提交到 `main` 后自动构建并发布。
+- 正式网站为 https://wupeng.vercel.app ，源码仓库为 `fjwupeng/blog`。Vercel 项目名称为 `wupeng`，已连接本仓库，提交到 `main` 后自动构建并发布。旧地址 `wupeng-personal.vercel.app` 自动跳转到新地址。
 - 原 Sites 链接为私有预览，不随 GitHub 更新。
 
 ## 新增文章

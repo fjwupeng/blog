@@ -1,6 +1,6 @@
 site:
   name: 吴鹏
-  site: 'https://wupeng-personal.vercel.app'
+  site: 'https://wupeng.vercel.app'
   base: '/'
   trailingSlash: false
 
