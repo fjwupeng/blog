@@ -718,6 +718,7 @@
   }
   .menu {
     display: block;
+    position: relative;
   }
   .brand-mark {
     font-size: 29px;
@@ -736,6 +737,16 @@
     display: none;
   }
   .menu[open] .nav {
+    position: absolute;
+    right: 0;
+    top: 48px;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    z-index: 5;
     height: auto;
     min-width: 185px;
     gap: 20px;

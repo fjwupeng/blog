@@ -3,7 +3,9 @@ import Layout from '~/layouts/PersonalLayout.astro';
 import { Icon } from 'astro-icon/components';
 import ArticleCards from '~/components/ArticleCards.astro';
 import { findLatestPosts } from '~/utils/blog';
+import { experiments } from '~/data/experiments';
 const posts = await findLatestPosts({ count: 2 });
+const experiment = experiments[0];
 const abilities = [
   { icon: 'tabler:code', title: '全栈开发', description: '从需求到上线的完整交付能力' },
   { icon: 'tabler:cube', title: '产品创造', description: '把真实问题转化为可用产品' },
@@ -71,7 +73,7 @@ const abilities = [
       </div>
       <div class="home-work">
         <div class="work-heading">
-          <span class="home-label">我的作品</span><a class="home-link" href="/projects"
+          <span class="home-label">作品与探索</span><a class="home-link" href="/projects"
             >查看全部作品<Icon name="tabler:arrow-right" /></a
           >
         </div>
@@ -99,7 +101,7 @@ const abilities = [
               正在研究如何通过 AI 帮助企业管理品牌信息、多渠道内容分发，并持续验证搜索与品牌表现。
             </p><ul class="work-tags" aria-label="项目标签"><li>AI 应用</li><li>内容分发</li><li>品牌监测</li></ul><a
               class="home-link"
-              href="#experiments">查看进展<Icon name="tabler:arrow-right" /></a
+              href={`/experiments/${experiment.slug}`}>查看实验进展<Icon name="tabler:arrow-right" /></a
             >
           </article>
         </div>
@@ -112,16 +114,17 @@ const abilities = [
     </section>
     <section id="experiments" class="home-experiments">
       <div class="home-section-heading">
-        <div><span class="home-label">BUILD IN PUBLIC</span><h2>公开实验</h2></div><a class="home-link" href="/projects"
-          >了解我的实践<Icon name="tabler:arrow-right" /></a
+        <div><span class="home-label">BUILD IN PUBLIC</span><h2>公开实验</h2></div><a
+          class="home-link"
+          href="/experiments">查看全部实验<Icon name="tabler:arrow-right" /></a
         >
       </div><article class="experiment-row">
         <div>
-          <span class="work-status research">研究中</span><h3>AI 企业增长：让内容形成长期积累</h3><p>
-            从个人官网与文章管理开始，探索品牌信息整理、多平台内容分发和效果追踪。当前优先搭建内容基础，后续再用真实反馈验证方向。
+          <span class="work-status research">{experiment.status}</span><h3>{experiment.title}</h3><p>
+            {experiment.focus}
           </p>
-        </div><a class="home-link" href="/articles/one-article-many-channels"
-          >阅读相关思考<Icon name="tabler:arrow-right" /></a
+        </div><a class="home-link" href={`/experiments/${experiment.slug}`}
+          >查看实验进展<Icon name="tabler:arrow-right" /></a
         >
       </article>
     </section>

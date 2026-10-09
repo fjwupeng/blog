@@ -1,21 +1,32 @@
 ---
 import { Icon } from 'astro-icon/components';
 import { fetchPosts } from '~/utils/blog';
+import { experiments } from '~/data/experiments';
 const posts = await fetchPosts();
 const entries = [
-  ...posts.map((p) => ({ title: p.title, description: p.excerpt || '', href: `/${p.permalink}`, kind: '文章' })),
+  ...posts.map((p) => ({
+    title: p.title,
+    description: [p.category?.title, p.excerpt].filter(Boolean).join(' · '),
+    href: `/${p.permalink}`,
+    kind: '文章',
+  })),
   { title: '跟卖雷达', description: '亚马逊跟卖场景与项目实践', href: '/projects', kind: '作品' },
-  { title: 'AI 企业增长项目', description: '品牌信息、内容分发与公开实验', href: '/#experiments', kind: '实验' },
+  ...experiments.map((experiment) => ({
+    title: experiment.title,
+    description: experiment.description,
+    href: `/experiments/${experiment.slug}`,
+    kind: '实验',
+  })),
   { title: '关于吴鹏', description: '独立开发者与 AI 创业探索者', href: '/about', kind: '关于' },
 ];
 ---
 
-<button type="button" class="search-trigger" aria-label="搜索文章和作品" aria-haspopup="dialog"
+<button type="button" class="search-trigger" aria-label="搜索本站内容" aria-haspopup="dialog"
   ><Icon name="tabler:search" /></button
 >
 <dialog class="search-dialog" aria-labelledby="search-heading">
   <div class="search-heading">
-    <h2 id="search-heading">搜索文章和作品</h2><button type="button" class="search-close" aria-label="关闭搜索"
+    <h2 id="search-heading">搜索文章、实验和作品</h2><button type="button" class="search-close" aria-label="关闭搜索"
       ><Icon name="tabler:x" /></button
     >
   </div><label class="search-field"

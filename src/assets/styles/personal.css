@@ -225,6 +225,148 @@ img {
   color: var(--soft);
   display: flex;
   gap: 18px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.category-link {
+  color: var(--blue);
+}
+.category-link:hover {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.article-card-content {
+  display: block;
+}
+.category-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 36px;
+}
+.category-nav a {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  padding: 8px 18px;
+  font-size: 15px;
+}
+.category-nav a:hover {
+  border-color: var(--blue);
+  color: var(--blue);
+}
+.category-nav a[aria-current='page'] {
+  color: white;
+  background: var(--blue);
+  border-color: var(--blue);
+}
+.category-nav span {
+  font-size: 12px;
+  opacity: 0.8;
+}
+.archive-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 24px;
+}
+.archive-heading h2 {
+  margin: 0;
+  font-size: 23px;
+}
+.archive-heading > span {
+  color: var(--soft);
+  font-size: 13px;
+}
+.experiment-list {
+  display: grid;
+  gap: 24px;
+  align-content: start;
+}
+.experiment-card {
+  padding: 30px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+}
+.experiment-card-meta {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+.experiment-card-meta time {
+  color: var(--soft);
+  font-size: 13px;
+}
+.experiment-card h2 {
+  font-size: 27px;
+  line-height: 1.5;
+  margin: 18px 0 10px;
+}
+.experiment-card h2 a:hover {
+  color: var(--blue);
+}
+.experiment-card p {
+  color: var(--soft);
+}
+.experiment-focus {
+  background: var(--wash);
+  border-radius: 10px;
+  padding: 18px 22px;
+  margin: 24px 0;
+}
+.experiment-focus p {
+  margin: 4px 0 0;
+}
+.experiment-progress,
+.experiment-reading {
+  margin-top: 42px;
+}
+.experiment-detail section > h2 {
+  font-size: 27px;
+  line-height: 1.5;
+}
+.milestones {
+  list-style: none;
+  padding: 0;
+}
+.milestone {
+  border-left: 3px solid var(--line);
+  padding: 4px 0 4px 24px;
+  margin-bottom: 24px;
+}
+.milestone.done {
+  border-color: #289967;
+}
+.milestone.current {
+  border-color: var(--blue);
+}
+.milestone-label {
+  font-size: 13px;
+  color: var(--soft);
+}
+.milestone.done .milestone-label {
+  color: #20734f;
+}
+.milestone.current .milestone-label {
+  color: var(--blue);
+}
+.milestone h3 {
+  font-size: 21px;
+  margin: 4px 0;
+}
+.milestone p,
+.experiment-reading > p {
+  margin-top: 6px;
+  color: var(--soft);
+}
+.experiment-reading .articles {
+  grid-template-columns: 1fr;
+  margin-top: 24px;
 }
 .article-card h3 {
   font-size: 24px;
@@ -542,6 +684,15 @@ img {
   }
   .article-card h3 {
     font-size: 23px;
+  }
+  .experiment-card {
+    padding: 24px;
+  }
+  .experiment-card h2 {
+    font-size: 23px;
+  }
+  .longread .article-meta {
+    gap: 8px 16px;
   }
   .project h3 {
     font-size: 36px;

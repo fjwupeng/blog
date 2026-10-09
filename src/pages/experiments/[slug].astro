@@ -1,0 +1,61 @@
+---
+import Layout from '~/layouts/PersonalLayout.astro';
+import ArticleCards from '~/components/ArticleCards.astro';
+import { experiments } from '~/data/experiments';
+import { fetchPosts } from '~/utils/blog';
+
+export function getStaticPaths() {
+  return experiments.map((experiment) => ({ params: { slug: experiment.slug }, props: { experiment } }));
+}
+interface Props {
+  experiment: (typeof experiments)[number];
+}
+const { experiment } = Astro.props;
+const relatedPosts = (await fetchPosts()).filter((post) => experiment.relatedPostSlugs.includes(post.slug));
+---
+
+<Layout title={experiment.title} description={experiment.description}>
+  <article class="longread experiment-detail">
+    <a class="text-link" href="/experiments">全部公开实验</a>
+    <h1>{experiment.title}</h1>
+    <div class="experiment-card-meta">
+      <span class="work-status research">{experiment.status}</span><time datetime={experiment.updatedAt}
+        >更新于 {experiment.updatedAt}</time
+      >
+    </div>
+    <p class="lead">{experiment.description}</p>
+    <div class="prose"><h2>想验证什么</h2><p>{experiment.question}</p><p>{experiment.context}</p></div>
+    <section class="experiment-progress" aria-labelledby="progress-heading">
+      <h2 id="progress-heading">当前进展</h2>
+      <ol class="milestones">
+        {
+          experiment.milestones.map((step) => (
+            <li class:list={['milestone', step.state]}>
+              <>
+                <span class="milestone-label">{step.label}</span>
+                <h3>{step.title}</h3>
+                <p>{step.description}</p>
+              </>
+            </li>
+          ))
+        }
+      </ol>
+    </section>
+    <div class="prose">
+      <h2>还需要验证的问题</h2><ul>{experiment.hypotheses.map((question) => <li>{question}</li>)}</ul>
+      <h2>接下来怎么做</h2><ol>{experiment.nextSteps.map((step) => <li>{step}</li>)}</ol>
+    </div>
+    {
+      relatedPosts.length > 0 && (
+        <section class="experiment-reading" aria-labelledby="reading-heading">
+          <>
+            <h2 id="reading-heading">与这项实验相关的文章</h2>
+            <p>文章整理想法与方法；本页记录实验的进展。</p>
+            <ArticleCards posts={relatedPosts} />
+          </>
+        </section>
+      )
+    }
+    <div class="article-end"><a class="text-link" href="/experiments">返回公开实验列表</a></div>
+  </article>
+</Layout>

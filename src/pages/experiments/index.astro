@@ -1,0 +1,43 @@
+---
+import Layout from '~/layouts/PersonalLayout.astro';
+import { Icon } from 'astro-icon/components';
+import { experiments } from '~/data/experiments';
+---
+
+<Layout title="公开实验" description="吴鹏正在探索的问题、实验进展与下一步计划。">
+  <div class="wrap">
+    <div class="page-intro">
+      <div class="eyebrow">BUILD IN PUBLIC / 公开实验</div><h1>把探索的过程，也记录下来。</h1><p>
+        这里记录正在验证的想法。每项实验都有自己的问题、当前进展和下一步计划，随着实践持续更新。
+      </p>
+    </div>
+    <div class="page-body experiment-list">
+      {
+        experiments.map((experiment) => (
+          <article class="experiment-card">
+            <div class="experiment-card-meta">
+              <>
+                <span class="work-status research">{experiment.status}</span>
+                <time datetime={experiment.updatedAt}>更新于 {experiment.updatedAt}</time>
+              </>
+            </div>
+            <h2>
+              <a href={`/experiments/${experiment.slug}`}>{experiment.title}</a>
+            </h2>
+            <p>{experiment.description}</p>
+            <div class="experiment-focus">
+              <>
+                <strong>当前进展</strong>
+                <p>{experiment.focus}</p>
+              </>
+            </div>
+            <a class="home-link" href={`/experiments/${experiment.slug}`}>
+              查看实验进展
+              <Icon name="tabler:arrow-right" />
+            </a>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</Layout>

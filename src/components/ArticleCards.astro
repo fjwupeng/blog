@@ -1,5 +1,6 @@
 ---
 import type { Post } from '~/types';
+import { getPermalink } from '~/utils/permalinks';
 interface Props {
   posts: Post[];
 }
@@ -9,21 +10,25 @@ const { posts } = Astro.props;
 <div class="articles">
   {
     posts.map((post) => (
-      <a class="article-card" href={`/${post.permalink}`}>
-        <>
-          <div class="article-meta">
-            <>
-              <span>{post.category?.title || '随笔'}</span>
-              <time datetime={post.publishDate.toISOString()}>
-                {post.publishDate.toLocaleDateString('zh-CN', { timeZone: 'Asia/Shanghai' })}
-              </time>
-            </>
-          </div>
+      <article class="article-card">
+        <div class="article-meta">
+          {post.category ? (
+            <a class="category-link" href={getPermalink(post.category.slug, 'category')}>
+              {post.category.title}
+            </a>
+          ) : (
+            <span>随笔</span>
+          )}
+          <time datetime={post.publishDate.toISOString()}>
+            {post.publishDate.toLocaleDateString('zh-CN', { timeZone: 'Asia/Shanghai' })}
+          </time>
+        </div>
+        <a class="article-card-content" href={`/${post.permalink}`}>
           <h3>{post.title}</h3>
           <p>{post.excerpt}</p>
           <span class="article-bottom">阅读全文</span>
-        </>
-      </a>
+        </a>
+      </article>
     ))
   }
 </div>

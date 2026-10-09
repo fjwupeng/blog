@@ -1,0 +1,28 @@
+---
+import Layout from '~/layouts/PersonalLayout.astro';
+import ArticleArchive from '~/components/ArticleArchive.astro';
+import { fetchPosts } from '~/utils/blog';
+import { getArticleCategories } from '~/utils/article-categories';
+import type { Taxonomy } from '~/types';
+
+export async function getStaticPaths() {
+  return getArticleCategories(await fetchPosts()).map((category) => ({
+    params: { slug: category.slug },
+    props: { category },
+  }));
+}
+interface Props {
+  category: Taxonomy;
+}
+const { category } = Astro.props;
+---
+
+<Layout title={`${category.title} · 文章分类`} description={`吴鹏关于${category.title}的文章与实践笔记。`}>
+  <div class="wrap">
+    <div class="page-intro">
+      <div class="eyebrow">WRITING / 文章分类</div><h1>{category.title}</h1><p>
+        围绕这个主题的思考与方法。也可以切换分类，继续阅读其他文章。
+      </p>
+    </div><div class="page-body"><ArticleArchive category={category} /></div>
+  </div>
+</Layout>

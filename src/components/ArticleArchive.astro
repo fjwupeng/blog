@@ -1,0 +1,30 @@
+---
+import ArticleCards from '~/components/ArticleCards.astro';
+import { fetchPosts } from '~/utils/blog';
+import { getArticleCategories } from '~/utils/article-categories';
+import { getPermalink } from '~/utils/permalinks';
+import type { Taxonomy } from '~/types';
+
+interface Props {
+  category?: Taxonomy;
+}
+const { category } = Astro.props;
+const posts = await fetchPosts();
+const categories = getArticleCategories(posts);
+const visiblePosts = category ? posts.filter((post) => post.category?.slug === category.slug) : posts;
+---
+
+<nav class="category-nav" aria-label="文章分类">
+  <a href="/articles" aria-current={!category ? 'page' : undefined}>全部文章 <span>{posts.length}</span></a>
+  {
+    categories.map((item) => (
+      <a href={getPermalink(item.slug, 'category')} aria-current={category?.slug === item.slug ? 'page' : undefined}>
+        {item.title} <span>{item.count}</span>
+      </a>
+    ))
+  }
+</nav>
+<div class="archive-heading">
+  <h2>{category?.title || '全部文章'}</h2><span>共 {visiblePosts.length} 篇 · 按发布时间排序</span>
+</div>
+<ArticleCards posts={visiblePosts} />
