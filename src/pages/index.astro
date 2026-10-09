@@ -124,6 +124,9 @@ const abilities = [
             >
           </article>
         </div>
+        <p>
+          比如，跟卖雷达是我围绕亚马逊跟卖场景推进的一项工具实践。它有自己的产品入口，也有需要继续收集的使用反馈。官网可以把这些背景接起来，让一个作品成为认识我的线索。
+        </p>
       </div>
     </section>
     <section class="home-articles">
@@ -146,6 +149,39 @@ const abilities = [
           >查看实验进展<Icon name="tabler:arrow-right" /></a
         >
       </article>
+      <p>{experiment.description}</p>
+      <p>{experiment.question}</p>
+      <p>{experiment.context}</p>
+      <div class="home-faq">
+        {
+          experiment.milestones.map((milestone) => (
+            <section>
+              <h3>
+                {milestone.label}：{milestone.title}
+              </h3>
+              <p>{milestone.description}</p>
+            </section>
+          ))
+        }
+      </div>
+    </section>
+    <section class="home-notes" aria-labelledby="content-heading">
+      <h2 id="content-heading">作品、实验和文章，各自回答一个问题</h2>
+      <p>为了让网站容易理解，我把内容分成三个入口：</p>
+      <ul>
+        <li>我的作品：已经可以访问的产品，以及它回应的实际场景。</li>
+        <li>公开实验：仍在探索的问题、当前进展和下一步打算验证的事情。</li>
+        <li>文章：从实践中整理出的想法与方法，按主题分类，方便持续阅读。</li>
+      </ul>
+      <p>
+        它们会有关联。例如，一项实验可能产生一篇文章；一个想法经过验证，也可能成为产品。但读者点击某个入口时，应该能看到这个入口所承诺的内容。
+      </p>
+      <p>
+        我希望这里既能展示做出来的东西，也能留下尚未完成的过程。一个方向还在研究，就清楚地写“研究中”；一个结论缺少证据，就先保留为待验证的问题。
+      </p>
+      <a class="home-link" href="/articles/a-place-for-my-work/"
+        >为什么我要搭建一个自己的个人网站<Icon name="tabler:arrow-right" /></a
+      >
     </section>
     <section class="home-notes" aria-labelledby="practice-heading">
       <h2 id="practice-heading">我如何维护这个网站？</h2>

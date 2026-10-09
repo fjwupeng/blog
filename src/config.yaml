@@ -1,6 +1,6 @@
 site:
   name: 吴鹏
-  site: 'https://fjwupeng.pages.dev'
+  site: 'https://wupeng.dev'
   base: '/'
   trailingSlash: true
 

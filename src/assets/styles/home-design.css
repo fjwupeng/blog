@@ -478,10 +478,21 @@
   margin: 0 0 20px;
   font-size: 24px;
 }
-.home-notes p {
+.home-work > p,
+.home-experiments > p,
+.home-experiments .home-faq p,
+.home-notes p,
+.home-notes ul {
   color: var(--soft);
   line-height: 1.9;
   max-width: 960px;
+}
+.home-notes ul {
+  padding-left: 24px;
+  list-style: disc;
+}
+.home-experiments .home-faq {
+  margin-top: 24px;
 }
 .home-notes p a {
   color: var(--blue);
