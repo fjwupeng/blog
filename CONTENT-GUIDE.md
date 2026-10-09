@@ -8,7 +8,7 @@
 - 两篇开站文章是根据讨论起草的文案，请在面向公众发布前核对。
 - 照片来自你在原对话中提供的本人照片。
 - 公开联系方式尚未提供；联系页会如实说明，未设置虚假的提交表单。
-- 正式网站为 https://wupeng.vercel.app ，源码仓库为 `fjwupeng/blog`。Vercel 项目名称为 `wupeng`，已连接本仓库，提交到 `main` 后自动构建并发布。旧地址 `wupeng-personal.vercel.app` 自动跳转到新地址。
+- 当前正式网站为 https://wupeng-36t.pages.dev ，源码仓库为 `fjwupeng/blog`。Cloudflare Pages 项目名称为 `wupeng`，已连接本仓库并完成首次部署，提交到 `main` 后自动构建并发布。Vercel 部署 https://wupeng.vercel.app 保留，也连接同一仓库。
 - 原 Sites 链接为私有预览，不随 GitHub 更新。
 
 ## 新增文章
@@ -38,9 +38,9 @@ Node.js 版本遵循 `package.json`。首次安装运行 `npm ci`，预览运行
 ## GitHub 自动更新
 
 1. 在本仓库新增或修改文章、配图、页面。
-2. 提交到 `main`，Vercel 自动执行 `npm ci` 和 `npm run build`，发布 `dist`。Node.js 使用 24。
-3. 在 Vercel 的 Deployments 中查看状态。成功后正式网址更新；失败时网站保留上一版。
-4. 绑定自定义域名后，修改 `src/config.yaml` 中的 `site.site`，或在 Vercel 设置 `SITE_URL` 环境变量；环境变量优先。构建会同步更新规范链接、RSS、站点地图和 robots.txt。
+2. 提交到 `main`，Cloudflare Pages 自动安装依赖并执行 `npm run build`，发布 `dist`。Node.js 使用 24。
+3. 在 Cloudflare Pages 项目的部署列表中查看状态。成功后正式网址更新；失败时网站保留上一版。
+4. 绑定自定义域名后，修改 `src/config.yaml` 中的 `site.site`，或在 Cloudflare 的构建环境设置 `SITE_URL`；环境变量优先。构建会同步更新规范链接、RSS、站点地图和 robots.txt。设置步骤见 [CLOUDFLARE-DEPLOYMENT.md](CLOUDFLARE-DEPLOYMENT.md)。
 
 文章文件可以直接通过 GitHub 网页的编辑功能维护。`draft: true` 会隐藏文章；准备发布时请设为 `draft: false`。仅修改本地文件还需要提交并推送。
 
@@ -52,4 +52,4 @@ Node.js 版本遵循 `package.json`。首次安装运行 `npm ci`，预览运行
 
 ## 私有预览与正式上线
 
-Vercel 网站已上线，后续可以绑定自定义域名并补充公开联系方式。文章和项目描述仍由本人审阅维护。搜索收录和 AI 引用没有保证。
+Cloudflare Pages 网站已上线，后续可以绑定自定义域名并补充公开联系方式。国内直连效果仍需测试。文章和项目描述仍由本人审阅维护。搜索收录和 AI 引用没有保证。

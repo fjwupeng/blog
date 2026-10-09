@@ -4,19 +4,19 @@
 
 内容维护与部署步骤见 [CONTENT-GUIDE.md](CONTENT-GUIDE.md)。
 
-Cloudflare Pages 的部署配置已准备，连接步骤见 [CLOUDFLARE-DEPLOYMENT.md](CLOUDFLARE-DEPLOYMENT.md)。Cloudflare 的实际上线状态以控制台为准。
+Cloudflare Pages 已连接本仓库并完成首次部署，配置说明见 [CLOUDFLARE-DEPLOYMENT.md](CLOUDFLARE-DEPLOYMENT.md)。
 
 源码仓库：[fjwupeng/blog](https://github.com/fjwupeng/blog)。文章位于 `src/data/post/`，图片位于 `public/images/`。
 
-网站：[wupeng.vercel.app](https://wupeng.vercel.app)。Vercel 项目名称为 `wupeng`，已连接本仓库，提交到 `main` 会自动构建并发布。旧地址 `wupeng-personal.vercel.app` 自动跳转到新地址。
+网站：[wupeng-36t.pages.dev](https://wupeng-36t.pages.dev)。Cloudflare Pages 项目名称为 `wupeng`，提交到 `main` 会自动构建并发布。平台实际分配的网址包含后缀 `-36t`。
 
-提交到 `main` 后会运行构建检查，同时触发 Vercel 自动发布。原来的 Sites 预览链接由另一套流程维护，不随 GitHub 更新。
+提交到 `main` 后会运行构建检查，同时触发 Cloudflare Pages 自动发布。Vercel 的 [wupeng.vercel.app](https://wupeng.vercel.app) 保留为另一份部署，也连接同一仓库。原来的 Sites 预览链接由另一套流程维护，不随 GitHub 更新。
 
 Vercel 连接参数：导入 `fjwupeng/blog`，Framework Preset 选 `Astro`，生产分支 `main`，构建命令 `npm run build`，输出目录 `dist`，Node.js 24。仓库中的 `vercel.json` 已配置构建参数。
 
-`src/config.yaml` 已配置当前正式网址，使文章规范链接、RSS 和站点地图使用正确域名。以后绑定自定义域名时，可以修改此配置或设置 Vercel 环境变量 `SITE_URL` 覆盖它。其他分支用于预览。
+`src/config.yaml` 已配置当前 Cloudflare 网址，使文章规范链接、RSS 和站点地图使用正确域名。以后绑定自定义域名时，可以修改此配置或设置托管平台的构建环境变量 `SITE_URL` 覆盖它。其他分支用于预览。
 
-可以先使用 Vercel 分配的网址，域名稍后再绑定。添加自定义域名时，以 Vercel 项目页面给出的 DNS 记录为准。
+添加自定义域名时，以对应托管平台项目页面给出的 DNS 记录为准。Cloudflare 默认域名的中国大陆访问效果仍需使用国内直连网络测试。
 
 当前没有写作后台，也不会自动向公众号、知乎等平台发布内容。
 
