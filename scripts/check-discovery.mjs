@@ -1,8 +1,13 @@
 import assert from 'node:assert/strict';
 import fs from 'node:fs/promises';
+import { createHash } from 'node:crypto';
 import { getSite, getSitemapUrls, readLocalSitemap, root, decodeXml } from './discovery-utils.mjs';
 
 const site = await getSite();
+const headers = await fs.readFile(new URL('dist/_headers', root), 'utf8');
+const policy = headers.match(/^\s+Content-Security-Policy: (.+)$/m)?.[1];
+assert(policy && policy.includes("frame-ancestors 'none'") && !policy.includes("'unsafe-inline'"));
+assert(/Strict-Transport-Security: max-age=31536000; includeSubDomains/.test(headers));
 const dates = new Map();
 const urls = await getSitemapUrls(site, async (url) => {
   const xml = await readLocalSitemap(url);
@@ -34,6 +39,11 @@ for (const url of urls) {
   const graphMatch = html.match(/<script[^>]*type="application\/ld\+json"[^>]*>([\s\S]*?)<\/script>/);
   assert(graphMatch, `Missing structured data: ${url}`);
   const graph = JSON.parse(graphMatch[1])['@graph'];
+  for (const [, attributes, body] of html.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script>/gi)) {
+    if (!body.trim() || /\bsrc\s*=|application\/ld\+json/.test(attributes)) continue;
+    const hash = `'sha256-${createHash('sha256').update(body).digest('base64')}'`;
+    assert(policy.includes(hash), `CSP blocks an inline script on ${url}`);
+  }
   const person = graph.find((item) => item['@type'] === 'Person');
   assert.equal(person.name, '吴鹏');
   assert.equal(person['@id'], new URL('/about/#person', site).href);
@@ -54,12 +64,19 @@ for (const url of urls) {
     assert(includesText(html, '引用本文时'));
     assert.equal(dates.get(url), posting.dateModified, `Article sitemap date mismatch: ${url}`);
   }
-  if (webpage['@type'] === 'FAQPage') {
-    for (const question of webpage.mainEntity) {
+  const faq = webpage['@type'] === 'FAQPage' ? webpage : webpage.hasPart;
+  if (faq?.['@type'] === 'FAQPage') {
+    for (const question of faq.mainEntity) {
       questionCount++;
       assert(includesText(html, question.name), 'FAQ question is not visible.');
       assert(includesText(html, question.acceptedAnswer.text), 'FAQ answer is not visible.');
     }
+  }
+  if (page.pathname === '/') {
+    assert(html.includes(`datetime="${webpage.datePublished}"`));
+    assert(html.includes(`datetime="${webpage.dateModified}"`));
+    assert.equal(dates.get(url), webpage.dateModified);
+    assert(person.telephone && person.contactPoint.telephone === person.telephone);
   }
   for (const match of html.matchAll(/href="([^"]+)"/g)) {
     const target = new URL(decodeXml(match[1]), page);
@@ -75,6 +92,9 @@ const robots = await fs.readFile(new URL('dist/robots.txt', root), 'utf8');
 assert(/User-agent: \*\s+Allow: \//.test(robots));
 assert(robots.includes(`Sitemap: ${new URL('/sitemap-index.xml', site).href}`));
 const marker = JSON.parse(await fs.readFile(new URL('dist/site-build.json', root), 'utf8'));
+const llms = await fs.readFile(new URL('dist/llms.txt', root), 'utf8');
+assert(llms.split(/\r?\n/).filter((line) => line.trim()).length >= 5, 'llms.txt is too short.');
+assert(llms.includes(new URL('/articles/', site).href), 'llms.txt is missing the canonical article resource.');
 assert.equal(marker.site, site.href);
 assert(marker.commit === 'local' || /^[0-9a-f]{40}$/.test(marker.commit));
 const notFound = await fs.readFile(new URL('dist/404.html', root), 'utf8');

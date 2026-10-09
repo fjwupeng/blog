@@ -3,6 +3,7 @@ import path from 'node:path';
 import yaml from 'js-yaml';
 import slugify from 'limax';
 import { experiments } from '../data/experiments';
+import { homepage } from '../data/homepage';
 
 // Only use editorial dates. A new build does not make every page new content.
 export function getContentDates() {
@@ -15,6 +16,7 @@ export function getContentDates() {
     if (!dates.has(pathname) || iso > (dates.get(pathname) || '')) dates.set(pathname, iso);
   };
   const directory = new URL('../data/post/', import.meta.url);
+  record('/', homepage.updatedAt);
   for (const filename of fs.readdirSync(directory)) {
     if (!/\.mdx?$/.test(filename)) continue;
     const body = fs.readFileSync(new URL(filename, directory), 'utf8');

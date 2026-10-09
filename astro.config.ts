@@ -53,7 +53,7 @@ export default defineConfig({
 
   integrations: [
     sitemap({
-      filter: (page) => !/\/(404|site-build\.json|rss\.xml)(\/|$)/.test(new URL(page).pathname),
+      filter: (page) => !/\/(404|site-build\.json|rss\.xml|llms\.txt)(\/|$)/.test(new URL(page).pathname),
       serialize: (item) => {
         const lastmod = contentDates.get(new URL(item.url).pathname);
         return lastmod ? { ...item, lastmod } : item;

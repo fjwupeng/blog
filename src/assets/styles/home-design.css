@@ -313,6 +313,11 @@
 .work-heading > .home-link {
   font-size: 14px;
 }
+.work-heading > h2 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 400;
+}
 .work-cards {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -464,6 +469,40 @@
 }
 .experiment-row > .home-link {
   white-space: nowrap;
+}
+.home-notes {
+  padding: 36px 0;
+  border-top: 1px solid var(--line);
+}
+.home-notes h2 {
+  margin: 0 0 20px;
+  font-size: 24px;
+}
+.home-notes p {
+  color: var(--soft);
+  line-height: 1.9;
+  max-width: 960px;
+}
+.home-notes p a {
+  color: var(--blue);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.home-faq {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 400px), 1fr));
+  gap: 24px 40px;
+}
+.home-faq h3 {
+  font-size: 19px;
+  margin: 0 0 10px;
+}
+.home-faq p {
+  margin: 0;
+}
+.home-byline {
+  margin-top: 32px;
+  font-size: 14px;
 }
 .search-dialog {
   border: 1px solid var(--line);

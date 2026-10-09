@@ -4,8 +4,18 @@ import { Icon } from 'astro-icon/components';
 import ArticleCards from '~/components/ArticleCards.astro';
 import { findLatestPosts } from '~/utils/blog';
 import { experiments } from '~/data/experiments';
+import { siteFaq } from '~/data/site-faq';
+import { homepage } from '~/data/homepage';
+import { author } from '~/data/author';
 const posts = await findLatestPosts({ count: 2 });
 const experiment = experiments[0];
+const displayDate = (value: string) =>
+  new Date(value).toLocaleDateString('zh-CN', {
+    timeZone: 'Asia/Shanghai',
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
 const abilities = [
   { icon: 'tabler:code', title: '全栈开发', description: '从需求到上线的完整交付能力' },
   { icon: 'tabler:cube', title: '产品创造', description: '把真实问题转化为可用产品' },
@@ -14,11 +24,19 @@ const abilities = [
 ];
 ---
 
-<Layout>
+<Layout
+  title={homepage.title}
+  description={homepage.description}
+  date={new Date(homepage.publishedAt)}
+  updated={new Date(homepage.updatedAt)}
+  faq={siteFaq}
+>
   <section class="brand-hero" aria-labelledby="hero-heading">
     <img
       class="hero-backdrop"
-      src="/images/hero-reference-v2.png"
+      src="/images/hero-reference-v2-2172.webp"
+      srcset="/images/hero-reference-v2-768.webp 768w, /images/hero-reference-v2-1536.webp 1536w, /images/hero-reference-v2-2172.webp 2172w"
+      sizes="100vw"
       alt="吴鹏的户外肖像，背景为湖畔与城市远景；寄语：用技术实现想法，用产品探索商业，用实践验证认知。"
       fetchpriority="high"
       width="2172"
@@ -62,7 +80,7 @@ const abilities = [
   </section>
   <div class="home-wrap">
     <section class="home-overview">
-      <div class="home-about">
+      <section class="home-about">
         <div class="home-label"><Icon name="tabler:focus-2" />关于我</div><h2>一个热爱创造的独立开发者</h2><p>
           我是一名全栈开发者，拥有电商、SaaS、医疗等领域的项目经验。<br />我喜欢从零构建产品，也持续探索 AI
           对软件开发和互联网创业带来的新机会。
@@ -70,10 +88,10 @@ const abilities = [
           我相信，一个人也可以借助技术和 AI，做出真正有价值的产品。<br
           />这个网站记录我的技术实践、产品开发、创业思考和成长过程。
         </p><a class="home-link about-link" href="/about/">了解更多关于我<Icon name="tabler:arrow-right" /></a>
-      </div>
+      </section>
       <div class="home-work">
         <div class="work-heading">
-          <span class="home-label">作品与探索</span><a class="home-link" href="/projects/"
+          <h2 class="home-label">作品与探索</h2><a class="home-link" href="/projects/"
             >查看全部作品<Icon name="tabler:arrow-right" /></a
           >
         </div>
@@ -127,6 +145,47 @@ const abilities = [
           >查看实验进展<Icon name="tabler:arrow-right" /></a
         >
       </article>
+    </section>
+    <section class="home-notes" aria-labelledby="practice-heading">
+      <h2 id="practice-heading">我如何维护这个网站？</h2>
+      <p>
+        本站已经采用 Markdown 管理文章：原稿放在 GitHub 仓库里，提交更新后，Cloudflare Pages
+        会自动构建网站。文章分类、列表和详情也会随构建更新。
+      </p>
+      <p>
+        对我来说，这解决了“原稿应该放在哪里”的问题。后续发现表达不清或需要补充时，先修改仓库中的文件，保留文章地址，再按发布记录检查其他版本。
+      </p>
+      <p>
+        根据 <a href="https://developers.cloudflare.com/pages/configuration/git-integration/"
+          >Cloudflare Pages 官方文档</a
+        >，Git 推送可以触发自动部署。本站的原稿与修改记录见 <a
+          href="https://github.com/fjwupeng/blog/tree/main/src/data/post">GitHub 文章目录</a
+        >；目前自动完成的是官网更新，各个平台的稿件改写和发布仍需要单独处理，我还没有接入跨平台自动发布。
+      </p>
+      <a class="home-link" href="/articles/one-article-many-channels/"
+        >阅读完整的内容维护流程<Icon name="tabler:arrow-right" /></a
+      >
+    </section>
+    <section id="faq" class="home-notes" aria-labelledby="faq-heading">
+      <h2 id="faq-heading">关于我与本站的常见问题</h2>
+      <div class="home-faq">
+        {
+          siteFaq.map((item) => (
+            <section>
+              <h3>{item.question}</h3>
+              <p>{item.answer}</p>
+            </section>
+          ))
+        }
+      </div>
+      <p class="home-byline">
+        作者：<a href="/about/" rel="author">{author.name}</a> · {author.role}<br />
+        首页发布：<time datetime={new Date(homepage.publishedAt).toISOString()}
+          >{displayDate(homepage.publishedAt)}</time
+        > · 更新：<time datetime={new Date(homepage.updatedAt).toISOString()}>{displayDate(homepage.updatedAt)}</time
+        ><br />
+        交流与合作：<a href="tel:13123040176">13123040176</a> · <a href={author.github} rel="me">GitHub：fjwupeng</a>
+      </p>
     </section>
   </div>
 </Layout>
