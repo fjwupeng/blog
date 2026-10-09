@@ -15,7 +15,7 @@ const visiblePosts = category ? posts.filter((post) => post.category?.slug === c
 ---
 
 <nav class="category-nav" aria-label="文章分类">
-  <a href="/articles" aria-current={!category ? 'page' : undefined}>全部文章 <span>{posts.length}</span></a>
+  <a href="/articles/" aria-current={!category ? 'page' : undefined}>全部文章 <span>{posts.length}</span></a>
   {
     categories.map((item) => (
       <a href={getPermalink(item.slug, 'category')} aria-current={category?.slug === item.slug ? 'page' : undefined}>

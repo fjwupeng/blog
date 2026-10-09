@@ -2,7 +2,7 @@ site:
   name: 吴鹏
   site: 'https://fjwupeng.pages.dev'
   base: '/'
-  trailingSlash: false
+  trailingSlash: true
 
   googleSiteVerificationId: false
 

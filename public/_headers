@@ -1,2 +1,9 @@
 /_astro/*
   Cache-Control: public, max-age=31536000, immutable
+
+/site-build.json
+  X-Robots-Tag: noindex
+  Cache-Control: no-store
+
+/indexnow-key.txt
+  X-Robots-Tag: noindex

@@ -23,7 +23,7 @@ const { posts } = Astro.props;
             {post.publishDate.toLocaleDateString('zh-CN', { timeZone: 'Asia/Shanghai' })}
           </time>
         </div>
-        <a class="article-card-content" href={`/${post.permalink}`}>
+        <a class="article-card-content" href={getPermalink(post.permalink, 'post')}>
           <h3>{post.title}</h3>
           <p>{post.excerpt}</p>
           <span class="article-bottom">阅读全文</span>

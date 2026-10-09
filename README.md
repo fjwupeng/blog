@@ -4,6 +4,8 @@
 
 内容维护与部署步骤见 [CONTENT-GUIDE.md](CONTENT-GUIDE.md)。
 
+搜索发现、作者信息与 AI 引用维护步骤见 [GEO-GUIDE.md](GEO-GUIDE.md)。文章提供结构化数据、分类、要点和参考来源；正式部署后通过 IndexNow 发送更新通知。通知不代表搜索收录或 AI 引用，国内平台仍需逐步验证。
+
 Cloudflare Pages 已连接本仓库并完成首次部署，配置说明见 [CLOUDFLARE-DEPLOYMENT.md](CLOUDFLARE-DEPLOYMENT.md)。
 
 源码仓库：[fjwupeng/blog](https://github.com/fjwupeng/blog)。文章位于 `src/data/post/`，图片位于 `public/images/`。

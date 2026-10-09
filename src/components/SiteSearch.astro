@@ -2,22 +2,29 @@
 import { Icon } from 'astro-icon/components';
 import { fetchPosts } from '~/utils/blog';
 import { experiments } from '~/data/experiments';
+import { getPermalink } from '~/utils/permalinks';
 const posts = await fetchPosts();
 const entries = [
   ...posts.map((p) => ({
     title: p.title,
     description: [p.category?.title, p.excerpt].filter(Boolean).join(' · '),
-    href: `/${p.permalink}`,
+    href: getPermalink(p.permalink, 'post'),
     kind: '文章',
   })),
-  { title: '跟卖雷达', description: '亚马逊跟卖场景与项目实践', href: '/projects', kind: '作品' },
+  { title: '跟卖雷达', description: '亚马逊跟卖场景与项目实践', href: '/projects/', kind: '作品' },
   ...experiments.map((experiment) => ({
     title: experiment.title,
     description: experiment.description,
-    href: `/experiments/${experiment.slug}`,
+    href: getPermalink(`/experiments/${experiment.slug}`),
     kind: '实验',
   })),
-  { title: '关于吴鹏', description: '独立开发者与 AI 创业探索者', href: '/about', kind: '关于' },
+  { title: '关于吴鹏', description: '独立开发者与 AI 创业探索者', href: '/about/', kind: '关于' },
+  {
+    title: '关于吴鹏与本站的常见问题',
+    description: '作者背景、作品、实验、文章更新与引用方式',
+    href: '/faq/',
+    kind: '问答',
+  },
 ];
 ---
 

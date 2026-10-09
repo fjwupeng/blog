@@ -23,6 +23,8 @@ export interface Post {
   category?: Taxonomy;
   tags?: Taxonomy[];
   author?: string;
+  takeaways?: string[];
+  references?: Array<{ title: string; url: string }>;
 
   metadata?: MetaData;
 

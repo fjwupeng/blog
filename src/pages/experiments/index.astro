@@ -22,7 +22,7 @@ import { experiments } from '~/data/experiments';
               </>
             </div>
             <h2>
-              <a href={`/experiments/${experiment.slug}`}>{experiment.title}</a>
+              <a href={`/experiments/${experiment.slug}/`}>{experiment.title}</a>
             </h2>
             <p>{experiment.description}</p>
             <div class="experiment-focus">
@@ -31,7 +31,7 @@ import { experiments } from '~/data/experiments';
                 <p>{experiment.focus}</p>
               </>
             </div>
-            <a class="home-link" href={`/experiments/${experiment.slug}`}>
+            <a class="home-link" href={`/experiments/${experiment.slug}/`}>
               查看实验进展
               <Icon name="tabler:arrow-right" />
             </a>

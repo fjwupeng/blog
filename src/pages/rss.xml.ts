@@ -1,6 +1,7 @@
 import rss from '@astrojs/rss';
 import { fetchPosts } from '~/utils/blog';
 import { SITE } from 'astrowind:config';
+import { getPermalink } from '~/utils/permalinks';
 export async function GET() {
   const posts = await fetchPosts();
   return rss({
@@ -11,7 +12,8 @@ export async function GET() {
       title: post.title,
       pubDate: post.publishDate,
       description: post.excerpt,
-      link: `/${post.permalink}`,
+      link: getPermalink(post.permalink, 'post'),
+      categories: post.category ? [post.category.title] : [],
     })),
     customData: '<language>zh-CN</language>',
   });

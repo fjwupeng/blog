@@ -17,6 +17,8 @@
     "check:astro": "astro check",
     "check:eslint": "eslint .",
     "check:prettier": "prettier --check .",
+    "check:discovery": "node scripts/check-discovery.mjs",
+    "notify:indexnow": "node scripts/notify-indexnow.mjs",
     "fix": "npm run fix:eslint && npm run fix:prettier",
     "fix:eslint": "eslint --fix .",
     "fix:prettier": "prettier -w ."

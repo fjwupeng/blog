@@ -16,15 +16,18 @@ import type { AstroIntegration } from 'astro';
 import astrowind from './vendor/integration';
 
 import { readingTimeRemarkPlugin, responsiveTablesRehypePlugin } from './src/utils/frontmatter';
+import { getContentDates } from './src/utils/content-dates';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const hasExternalScripts = false;
+const contentDates = getContentDates();
 const whenExternalScripts = (items: (() => AstroIntegration) | (() => AstroIntegration)[] = []) =>
   hasExternalScripts ? (Array.isArray(items) ? items.map((item) => item()) : [items()]) : [];
 
 export default defineConfig({
   output: 'static',
+  trailingSlash: 'always',
 
   // Prefetch links as they enter the viewport for snappier navigations
   // (works together with <ClientRouter />, which enables prefetch by default).
@@ -49,7 +52,13 @@ export default defineConfig({
   ],
 
   integrations: [
-    sitemap(),
+    sitemap({
+      filter: (page) => !/\/(404|site-build\.json|rss\.xml)(\/|$)/.test(new URL(page).pathname),
+      serialize: (item) => {
+        const lastmod = contentDates.get(new URL(item.url).pathname);
+        return lastmod ? { ...item, lastmod } : item;
+      },
+    }),
     mdx(),
     icon({
       // Local SVG icons (used as <Icon name="file-name" />) live next to the other assets.

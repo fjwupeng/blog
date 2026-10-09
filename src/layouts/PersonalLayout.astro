@@ -3,6 +3,8 @@ import '~/assets/styles/personal.css';
 import '~/assets/styles/home-design.css';
 import SiteSearch from '~/components/SiteSearch.astro';
 import { SITE } from 'astrowind:config';
+import { author as siteAuthor } from '~/data/author';
+import { getCanonical, getPermalink } from '~/utils/permalinks';
 interface Props {
   title?: string;
   description?: string;
@@ -11,6 +13,10 @@ interface Props {
   updated?: Date;
   category?: string;
   tags?: string[];
+  author?: string;
+  index?: boolean;
+  breadcrumbs?: Array<{ name: string; href: string }>;
+  faq?: Array<{ question: string; answer: string }>;
 }
 const {
   title = '吴鹏 · 保持好奇，持续创造',
@@ -20,8 +26,27 @@ const {
   updated,
   category,
   tags = [],
+  author = siteAuthor.name,
+  index = true,
+  breadcrumbs = [],
+  faq = [],
 } = Astro.props;
-const canonical = new URL(Astro.url.pathname, SITE.site).href;
+const canonical = String(getCanonical(Astro.url.pathname));
+const siteUrl = new URL('/', SITE.site).href;
+const personId = `${getCanonical('/about/')}#person`;
+const websiteId = `${siteUrl}#website`;
+const person = {
+  '@type': 'Person',
+  '@id': personId,
+  name: siteAuthor.name,
+  alternateName: siteAuthor.handle,
+  url: String(getCanonical('/about/')),
+  description: siteAuthor.description,
+  jobTitle: siteAuthor.role,
+  image: new URL(siteAuthor.image, SITE.site).href,
+  sameAs: [siteAuthor.github],
+  knowsAbout: siteAuthor.topics,
+};
 const nav = [
   ['首页', '/'],
   ['关于我', '/about'],
@@ -31,27 +56,91 @@ const nav = [
 ];
 const path = Astro.url.pathname.replace(/\/$/, '') || '/';
 const active = (href: string) => path === href || (href !== '/' && path.startsWith(`${href}/`));
-const structured = article
-  ? {
-      '@context': 'https://schema.org',
-      '@type': 'BlogPosting',
-      headline: title,
-      description,
-      datePublished: date?.toISOString(),
-      dateModified: (updated || date)?.toISOString(),
-      articleSection: category,
-      inLanguage: 'zh-CN',
-      author: { '@type': 'Person', name: '吴鹏', url: new URL('/about', SITE.site).href },
-      mainEntityOfPage: canonical,
-    }
-  : {
-      '@context': 'https://schema.org',
+const pageType =
+  path === '/about'
+    ? ['AboutPage', 'ProfilePage']
+    : path === '/contact'
+      ? 'ContactPage'
+      : faq.length
+        ? 'FAQPage'
+        : ['/articles', '/experiments', '/projects'].some(
+              (base) => path === base || (base === '/articles' && path.startsWith('/articles/category/'))
+            )
+          ? 'CollectionPage'
+          : 'WebPage';
+const structured = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    person,
+    {
       '@type': 'WebSite',
+      '@id': websiteId,
       name: '吴鹏 · 个人官网',
-      url: SITE.site,
+      url: siteUrl,
       inLanguage: 'zh-CN',
-      author: { '@type': 'Person', name: '吴鹏', url: new URL('/about', SITE.site).href },
-    };
+      publisher: { '@id': personId },
+    },
+    {
+      '@type': pageType,
+      '@id': `${canonical}#webpage`,
+      url: canonical,
+      name: title,
+      description,
+      inLanguage: 'zh-CN',
+      isPartOf: { '@id': websiteId },
+      ...(path === '/about' ? { mainEntity: { '@id': personId } } : {}),
+      ...(article ? { mainEntity: { '@id': `${canonical}#article` } } : {}),
+      ...(faq.length
+        ? {
+            mainEntity: faq.map((item) => ({
+              '@type': 'Question',
+              name: item.question,
+              acceptedAnswer: { '@type': 'Answer', text: item.answer },
+            })),
+          }
+        : {}),
+      ...(breadcrumbs.length ? { breadcrumb: { '@id': `${canonical}#breadcrumb` } } : {}),
+    },
+    ...(article
+      ? [
+          {
+            '@type': 'BlogPosting',
+            '@id': `${canonical}#article`,
+            url: canonical,
+            headline: title,
+            description,
+            datePublished: date?.toISOString(),
+            dateModified: (updated || date)?.toISOString(),
+            articleSection: category,
+            keywords: tags.join(', '),
+            inLanguage: 'zh-CN',
+            author: author === siteAuthor.name ? { '@id': personId } : { '@type': 'Person', name: author },
+            publisher: { '@id': personId },
+            mainEntityOfPage: { '@id': `${canonical}#webpage` },
+          },
+        ]
+      : []),
+    ...(breadcrumbs.length
+      ? [
+          {
+            '@type': 'BreadcrumbList',
+            '@id': `${canonical}#breadcrumb`,
+            itemListElement: breadcrumbs.map((item, position) => ({
+              '@type': 'ListItem',
+              position: position + 1,
+              name: item.name,
+              item: String(getCanonical(item.href)),
+            })),
+          },
+        ]
+      : []),
+  ],
+};
+const verification = [
+  ['baidu-site-verification', import.meta.env.BAIDU_SITE_VERIFICATION],
+  ['msvalidate.01', import.meta.env.BING_SITE_VERIFICATION],
+  ['google-site-verification', import.meta.env.GOOGLE_SITE_VERIFICATION],
+].filter(([, value]) => value);
 ---
 
 <!doctype html>
@@ -60,6 +149,12 @@ const structured = article
     <meta charset="UTF-8" /><meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>{title.includes('吴鹏') ? title : `${title} · 吴鹏`}</title>
     <meta name="description" content={description} /><link rel="canonical" href={canonical} />
+    <meta
+      name="robots"
+      content={index ? 'index,follow,max-snippet:-1,max-image-preview:large,max-video-preview:-1' : 'noindex,follow'}
+    />
+    <meta name="author" content={author} />
+    {verification.map(([name, value]) => <meta name={name} content={value} />)}
     <meta property="og:title" content={title} /><meta property="og:description" content={description} /><meta
       property="og:type"
       content={article ? 'article' : 'website'}
@@ -67,6 +162,12 @@ const structured = article
       property="og:locale"
       content="zh_CN"
     />
+    <meta property="og:image" content={new URL(siteAuthor.image, SITE.site).href} />
+    <meta property="og:image:alt" content="吴鹏的户外肖像" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={new URL(siteAuthor.image, SITE.site).href} />
     {article && <meta property="article:published_time" content={date?.toISOString()} />}
     {article && <meta property="article:modified_time" content={(updated || date)?.toISOString()} />}
     {article && category && <meta property="article:section" content={category} />}
@@ -91,23 +192,23 @@ const structured = article
         <nav class="nav desktop-nav" aria-label="主导航">
           {
             nav.map(([label, href]) => (
-              <a href={href} aria-current={active(href) ? 'page' : undefined}>
+              <a href={getPermalink(href)} aria-current={active(href) ? 'page' : undefined}>
                 {label}
               </a>
             ))
           }
         </nav>
-        <div class="header-actions"><SiteSearch /><a class="contact-button" href="/contact">联系我</a></div>
+        <div class="header-actions"><SiteSearch /><a class="contact-button" href="/contact/">联系我</a></div>
         <details class="menu">
           <summary>菜单</summary><nav class="nav" aria-label="移动导航">
             {
               nav.map(([label, href]) => (
-                <a href={href} aria-current={active(href) ? 'page' : undefined}>
+                <a href={getPermalink(href)} aria-current={active(href) ? 'page' : undefined}>
                   {label}
                 </a>
               ))
             }
-            <a href="/contact">联系我</a>
+            <a href="/contact/">联系我</a>
           </nav>
         </details>
       </div>
@@ -116,7 +217,9 @@ const structured = article
     <footer class="footer">
       <div class="wrap footer-inner">
         <span>© {new Date().getFullYear()} 吴鹏 · 保持好奇，持续创造。</span><div class="footer-links">
-          <a href="/about">关于我</a><a href="/rss.xml">RSS 订阅</a><a href="/contact">联系</a>
+          <a href="/about/">关于我</a><a href="/faq/">常见问题</a><a href="/rss.xml">RSS 订阅</a><a href="/contact/"
+            >联系</a
+          >
         </div>
       </div>
     </footer>

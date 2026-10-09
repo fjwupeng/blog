@@ -33,9 +33,9 @@ const abilities = [
           />这里记录我的项目、思考、实验，以及从想法到产品的真实过程。
         </p>
         <div class="hero-buttons">
-          <a class="hero-primary" href="/about">了解我<Icon name="tabler:arrow-right" /></a><a
+          <a class="hero-primary" href="/about/">了解我<Icon name="tabler:arrow-right" /></a><a
             class="hero-secondary"
-            href="/articles">查看最新文章</a
+            href="/articles/">查看最新文章</a
           >
         </div>
       </div>
@@ -69,11 +69,11 @@ const abilities = [
         </p><p>
           我相信，一个人也可以借助技术和 AI，做出真正有价值的产品。<br
           />这个网站记录我的技术实践、产品开发、创业思考和成长过程。
-        </p><a class="home-link about-link" href="/about">了解更多关于我<Icon name="tabler:arrow-right" /></a>
+        </p><a class="home-link about-link" href="/about/">了解更多关于我<Icon name="tabler:arrow-right" /></a>
       </div>
       <div class="home-work">
         <div class="work-heading">
-          <span class="home-label">作品与探索</span><a class="home-link" href="/projects"
+          <span class="home-label">作品与探索</span><a class="home-link" href="/projects/"
             >查看全部作品<Icon name="tabler:arrow-right" /></a
           >
         </div>
@@ -101,7 +101,7 @@ const abilities = [
               正在研究如何通过 AI 帮助企业管理品牌信息、多渠道内容分发，并持续验证搜索与品牌表现。
             </p><ul class="work-tags" aria-label="项目标签"><li>AI 应用</li><li>内容分发</li><li>品牌监测</li></ul><a
               class="home-link"
-              href={`/experiments/${experiment.slug}`}>查看实验进展<Icon name="tabler:arrow-right" /></a
+              href={`/experiments/${experiment.slug}/`}>查看实验进展<Icon name="tabler:arrow-right" /></a
             >
           </article>
         </div>
@@ -109,21 +109,21 @@ const abilities = [
     </section>
     <section class="home-articles">
       <div class="home-section-heading">
-        <h2>最新文章</h2><a class="home-link" href="/articles">查看全部文章<Icon name="tabler:arrow-right" /></a>
+        <h2>最新文章</h2><a class="home-link" href="/articles/">查看全部文章<Icon name="tabler:arrow-right" /></a>
       </div><ArticleCards posts={posts} />
     </section>
     <section id="experiments" class="home-experiments">
       <div class="home-section-heading">
         <div><span class="home-label">BUILD IN PUBLIC</span><h2>公开实验</h2></div><a
           class="home-link"
-          href="/experiments">查看全部实验<Icon name="tabler:arrow-right" /></a
+          href="/experiments/">查看全部实验<Icon name="tabler:arrow-right" /></a
         >
       </div><article class="experiment-row">
         <div>
           <span class="work-status research">{experiment.status}</span><h3>{experiment.title}</h3><p>
             {experiment.focus}
           </p>
-        </div><a class="home-link" href={`/experiments/${experiment.slug}`}
+        </div><a class="home-link" href={`/experiments/${experiment.slug}/`}
           >查看实验进展<Icon name="tabler:arrow-right" /></a
         >
       </article>
