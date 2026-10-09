@@ -26,8 +26,9 @@ const abilities = [
 
 <Layout
   title={homepage.title}
+  pageName="你好，我是吴鹏。 保持好奇，持续创造。"
   description={homepage.description}
-  date={new Date(homepage.publishedAt)}
+  date={homepage.publishedAt}
   updated={new Date(homepage.updatedAt)}
   faq={siteFaq}
 >
@@ -180,9 +181,8 @@ const abilities = [
       </div>
       <p class="home-byline">
         作者：<a href="/about/" rel="author">{author.name}</a> · {author.role}<br />
-        首页发布：<time datetime={new Date(homepage.publishedAt).toISOString()}
-          >{displayDate(homepage.publishedAt)}</time
-        > · 更新：<time datetime={new Date(homepage.updatedAt).toISOString()}>{displayDate(homepage.updatedAt)}</time
+        首页发布：<time datetime={homepage.publishedAt}>{displayDate(homepage.publishedAt)}</time> · 更新：<time
+          datetime={new Date(homepage.updatedAt).toISOString()}>{displayDate(homepage.updatedAt)}</time
         ><br />
         交流与合作：<a href="tel:13123040176">13123040176</a> · <a href={author.github} rel="me">GitHub：fjwupeng</a>
       </p>
