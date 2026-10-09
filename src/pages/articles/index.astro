@@ -1,0 +1,16 @@
+---
+import Layout from '~/layouts/PersonalLayout.astro';
+import ArticleCards from '~/components/ArticleCards.astro';
+import { fetchPosts } from '~/utils/blog';
+const posts = await fetchPosts();
+---
+
+<Layout title="文章与思考" description="关于 AI 应用、互联网业务和个人品牌建设的思考与实践笔记。"
+  ><div class="wrap">
+    <div class="page-intro">
+      <div class="eyebrow">WRITING / 文章</div><h1>想清楚，再写下来。</h1><p>
+        记录实践中的问题、选择和方法。让一次思考，成为下一次行动的起点。
+      </p>
+    </div><div class="page-body"><ArticleCards posts={posts} /></div>
+  </div></Layout
+>

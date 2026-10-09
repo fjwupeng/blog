@@ -1,0 +1,29 @@
+---
+import type { Post } from '~/types';
+interface Props {
+  posts: Post[];
+}
+const { posts } = Astro.props;
+---
+
+<div class="articles">
+  {
+    posts.map((post) => (
+      <a class="article-card" href={`/${post.permalink}`}>
+        <>
+          <div class="article-meta">
+            <>
+              <span>{post.category?.title || '随笔'}</span>
+              <time datetime={post.publishDate.toISOString()}>
+                {post.publishDate.toLocaleDateString('zh-CN', { timeZone: 'Asia/Shanghai' })}
+              </time>
+            </>
+          </div>
+          <h3>{post.title}</h3>
+          <p>{post.excerpt}</p>
+          <span class="article-bottom">阅读全文</span>
+        </>
+      </a>
+    ))
+  }
+</div>

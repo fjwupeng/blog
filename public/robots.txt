@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://wupeng-personal.modrenn.chatgpt.site/sitemap-index.xml

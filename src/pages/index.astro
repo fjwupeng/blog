@@ -1,0 +1,129 @@
+---
+import Layout from '~/layouts/PersonalLayout.astro';
+import { Icon } from 'astro-icon/components';
+import ArticleCards from '~/components/ArticleCards.astro';
+import { findLatestPosts } from '~/utils/blog';
+const posts = await findLatestPosts({ count: 2 });
+const abilities = [
+  { icon: 'tabler:code', title: '全栈开发', description: '从需求到上线的完整交付能力' },
+  { icon: 'tabler:cube', title: '产品创造', description: '把真实问题转化为可用产品' },
+  { icon: 'tabler:bulb', title: '独立思考', description: '分享对 AI、技术和商业的判断' },
+  { icon: 'tabler:chart-line', title: '持续成长', description: '记录过程、成果、失败与复盘' },
+];
+---
+
+<Layout>
+  <section class="brand-hero" aria-labelledby="hero-heading">
+    <img
+      class="hero-backdrop"
+      src="/images/hero-reference-v2.png"
+      alt="吴鹏的户外肖像，背景为湖畔与城市远景；寄语：用技术实现想法，用产品探索商业，用实践验证认知。"
+      fetchpriority="high"
+      width="2172"
+      height="724"
+    />
+    <div class="home-wrap hero-body">
+      <div class="hero-message">
+        <div class="builder-label"><span></span>INDEPENDENT BUILDER</div>
+        <h1 id="hero-heading">你好，我是吴鹏。<br /><span>保持好奇，持续创造。</span></h1>
+        <p>
+          一名全栈开发者，热爱技术和产品，正在利用 AI 探索独立创业的更多可能。<br
+          />这里记录我的项目、思考、实验，以及从想法到产品的真实过程。
+        </p>
+        <div class="hero-buttons">
+          <a class="hero-primary" href="/about">了解我<Icon name="tabler:arrow-right" /></a><a
+            class="hero-secondary"
+            href="/articles">查看最新文章</a
+          >
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="ability-strip" aria-label="我的关注与能力">
+    <div class="home-wrap ability-grid">
+      {
+        abilities.map((item) => (
+          <div class="ability">
+            <>
+              <Icon name={item.icon} />
+              <div>
+                <>
+                  <h2>{item.title}</h2>
+                  <p>{item.description}</p>
+                </>
+              </div>
+            </>
+          </div>
+        ))
+      }
+    </div>
+  </section>
+  <div class="home-wrap">
+    <section class="home-overview">
+      <div class="home-about">
+        <div class="home-label"><Icon name="tabler:focus-2" />关于我</div><h2>一个热爱创造的独立开发者</h2><p>
+          我是一名全栈开发者，拥有电商、SaaS、医疗等领域的项目经验。<br />我喜欢从零构建产品，也持续探索 AI
+          对软件开发和互联网创业带来的新机会。
+        </p><p>
+          我相信，一个人也可以借助技术和 AI，做出真正有价值的产品。<br
+          />这个网站记录我的技术实践、产品开发、创业思考和成长过程。
+        </p><a class="home-link about-link" href="/about">了解更多关于我<Icon name="tabler:arrow-right" /></a>
+      </div>
+      <div class="home-work">
+        <div class="work-heading">
+          <span class="home-label">我的作品</span><a class="home-link" href="/projects"
+            >查看全部作品<Icon name="tabler:arrow-right" /></a
+          >
+        </div>
+        <div class="work-cards">
+          <article class="work-card">
+            <span class="work-status live">已上线</span><div class="work-title">
+              <span class="work-icon orange"><Icon name="tabler:radar-2" /></span><div>
+                <h3>跟卖雷达</h3><p>跨境电商数据探索与选品辅助工具</p>
+              </div>
+            </div><p class="work-description">
+              围绕亚马逊跟卖场景部署的工具，正在推进首批使用，持续收集真实业务中的反馈。
+            </p><ul class="work-tags" aria-label="项目标签"><li>跨境电商</li><li>数据分析</li><li>独立产品</li></ul><a
+              class="home-link"
+              href="https://genmai.jianduai.cn/"
+              target="_blank"
+              rel="noopener noreferrer">访问官网<Icon name="tabler:external-link" /></a
+            >
+          </article>
+          <article class="work-card">
+            <span class="work-status research">研究中</span><div class="work-title">
+              <span class="work-icon blue"><Icon name="tabler:stack-2-filled" /></span><div>
+                <h3>AI 企业增长项目</h3><p>帮助企业统一管理信息并提升传播效率</p>
+              </div>
+            </div><p class="work-description">
+              正在研究如何通过 AI 帮助企业管理品牌信息、多渠道内容分发，并持续验证搜索与品牌表现。
+            </p><ul class="work-tags" aria-label="项目标签"><li>AI 应用</li><li>内容分发</li><li>品牌监测</li></ul><a
+              class="home-link"
+              href="#experiments">查看进展<Icon name="tabler:arrow-right" /></a
+            >
+          </article>
+        </div>
+      </div>
+    </section>
+    <section class="home-articles">
+      <div class="home-section-heading">
+        <h2>最新文章</h2><a class="home-link" href="/articles">查看全部文章<Icon name="tabler:arrow-right" /></a>
+      </div><ArticleCards posts={posts} />
+    </section>
+    <section id="experiments" class="home-experiments">
+      <div class="home-section-heading">
+        <div><span class="home-label">BUILD IN PUBLIC</span><h2>公开实验</h2></div><a class="home-link" href="/projects"
+          >了解我的实践<Icon name="tabler:arrow-right" /></a
+        >
+      </div><article class="experiment-row">
+        <div>
+          <span class="work-status research">研究中</span><h3>AI 企业增长：让内容形成长期积累</h3><p>
+            从个人官网与文章管理开始，探索品牌信息整理、多平台内容分发和效果追踪。当前优先搭建内容基础，后续再用真实反馈验证方向。
+          </p>
+        </div><a class="home-link" href="/articles/one-article-many-channels"
+          >阅读相关思考<Icon name="tabler:arrow-right" /></a
+        >
+      </article>
+    </section>
+  </div>
+</Layout>

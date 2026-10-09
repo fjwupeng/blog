@@ -1,0 +1,110 @@
+---
+import '~/assets/styles/personal.css';
+import '~/assets/styles/home-design.css';
+import SiteSearch from '~/components/SiteSearch.astro';
+import { SITE } from 'astrowind:config';
+interface Props {
+  title?: string;
+  description?: string;
+  article?: boolean;
+  date?: Date;
+}
+const {
+  title = '吴鹏 · 保持好奇，持续创造',
+  description = '吴鹏的个人网站，记录 AI 应用、互联网业务与个人品牌建设中的思考和实践。',
+  article = false,
+  date,
+} = Astro.props;
+const canonical = new URL(Astro.url.pathname, SITE.site).href;
+const nav = [
+  ['首页', '/'],
+  ['关于我', '/about'],
+  ['文章', '/articles'],
+  ['公开实验', '/#experiments'],
+  ['我的作品', '/projects'],
+];
+const active = (href: string) => (href === '/' ? Astro.url.pathname === '/' : Astro.url.pathname.startsWith(href));
+const structured = article
+  ? {
+      '@context': 'https://schema.org',
+      '@type': 'BlogPosting',
+      headline: title,
+      description,
+      datePublished: date?.toISOString(),
+      author: { '@type': 'Person', name: '吴鹏', url: new URL('/about', SITE.site).href },
+      mainEntityOfPage: canonical,
+    }
+  : {
+      '@context': 'https://schema.org',
+      '@type': 'WebSite',
+      name: '吴鹏 · 个人官网',
+      url: SITE.site,
+      inLanguage: 'zh-CN',
+      author: { '@type': 'Person', name: '吴鹏', url: new URL('/about', SITE.site).href },
+    };
+---
+
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" /><meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>{title.includes('吴鹏') ? title : `${title} · 吴鹏`}</title>
+    <meta name="description" content={description} /><link rel="canonical" href={canonical} />
+    <meta property="og:title" content={title} /><meta property="og:description" content={description} /><meta
+      property="og:type"
+      content={article ? 'article' : 'website'}
+    /><meta property="og:url" content={canonical} /><meta property="og:site_name" content="吴鹏 · 个人官网" /><meta
+      property="og:locale"
+      content="zh_CN"
+    />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" /><link
+      rel="alternate"
+      type="application/rss+xml"
+      title="吴鹏的文章"
+      href="/rss.xml"
+    />
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(structured).replace(/</g, '\\u003c')} />
+  </head>
+  <body>
+    <a class="skip" href="#main">跳到正文</a>
+    <header class="site-header">
+      <div class="wrap header-inner">
+        <a href="/" class="brand" aria-label="吴鹏，返回首页"
+          ><span class="brand-mark" aria-hidden="true">WP<span>.</span></span><span class="brand-copy"
+            ><strong>吴鹏</strong><small>独立开发者 · AI 创业探索者</small></span
+          ></a
+        >
+        <nav class="nav desktop-nav" aria-label="主导航">
+          {
+            nav.map(([label, href]) => (
+              <a href={href} aria-current={active(href) ? 'page' : undefined}>
+                {label}
+              </a>
+            ))
+          }
+        </nav>
+        <div class="header-actions"><SiteSearch /><a class="contact-button" href="/contact">联系我</a></div>
+        <details class="menu">
+          <summary>菜单</summary><nav class="nav" aria-label="移动导航">
+            {
+              nav.map(([label, href]) => (
+                <a href={href} aria-current={active(href) ? 'page' : undefined}>
+                  {label}
+                </a>
+              ))
+            }
+            <a href="/contact">联系我</a>
+          </nav>
+        </details>
+      </div>
+    </header>
+    <main id="main"><slot /></main>
+    <footer class="footer">
+      <div class="wrap footer-inner">
+        <span>© {new Date().getFullYear()} 吴鹏 · 保持好奇，持续创造。</span><div class="footer-links">
+          <a href="/about">关于我</a><a href="/rss.xml">RSS 订阅</a><a href="/contact">联系</a>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
